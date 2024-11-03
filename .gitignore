@@ -1,0 +1,9 @@
+# Create and edit .gitignore
+touch .gitignore
+
+# Add these common Python ignores:
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
