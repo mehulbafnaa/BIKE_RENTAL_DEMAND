@@ -65,11 +65,11 @@ def main() -> None:
     data = load_data('data/UCI_bike_sharing.csv')
     data = feature_engineering(data)
     X, y = prepare_data(data)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_state=42)
     
     print("\nTraining and Evaluating Models...")
     models: Dict[str] = {
-        'Ridge Regression': RidgeRegression(alpha=0.1, learning_rate=0.1),
+        'Ridge Regression': RidgeRegression(alpha=0.1, learning_rate=0.001),
         'Gradient Boosting': GradientBoosting(n_estimators=100, learning_rate=0.1)
     }
     
