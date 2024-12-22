@@ -1,5 +1,3 @@
-# src/main.py
-
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -10,26 +8,24 @@ from typing import Tuple, Dict
 
 from data import load_data
 from features import feature_engineering
-from models import RidgeRegression, GradientBoosting
+from models import LassoRegression, ElasticNetRegression
 from evaluation import evaluate_model
 
-
 warnings.filterwarnings('ignore')
-
 
 def prepare_data(data: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
     """
     Prepare feature matrix X and target vector y for model training.
-
+    
     This involves:
     - Selecting numerical and categorical features.
     - Encoding categorical variables using one-hot encoding.
     - Scaling numerical features.
     - Handling missing values by imputing with mean.
-
+    
     Parameters:
         data (pd.DataFrame): Dataset with engineered features.
-
+    
     Returns:
         Tuple[np.ndarray, np.ndarray]: Feature matrix X and target vector y.
     """
@@ -46,17 +42,16 @@ def prepare_data(data: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
     y = y.astype(np.float64)
     return X, y
 
-
 def main() -> None:
     """
     Main function to execute the Bike Rental Demand Prediction pipeline.
-
+    
     Steps:
     1. Load data.
     2. Perform feature engineering.
     3. Prepare data for modeling.
     4. Split data into training and testing sets.
-    5. Train and evaluate Ridge Regression and Gradient Boosting models.
+    5. Train and evaluate Lasso and Elastic Net regression models.
     6. Identify and display the best performing model based on RMSE.
     """
     print("\nInitializing Bike Rental Demand Prediction...")
@@ -69,8 +64,8 @@ def main() -> None:
     
     print("\nTraining and Evaluating Models...")
     models: Dict[str] = {
-        'Ridge Regression': RidgeRegression(alpha=0.1, learning_rate=0.001),
-        'Gradient Boosting': GradientBoosting(n_estimators=100, learning_rate=0.1)
+        'Lasso Regression': LassoRegression(alpha=0.1, learning_rate=0.001),
+        'Elastic Net': ElasticNetRegression(alpha=0.1, l1_ratio=0.5, learning_rate=0.001)
     }
     
     results: Dict[str, Dict[str, float]] = {}
@@ -84,7 +79,6 @@ def main() -> None:
     print(f"RMSE: {best_model[1]['RMSE']:.4f}")
     print(f"P75 Precision: {best_model[1]['P75 Precision']:.4f}")
     print(f"P75 Recall: {best_model[1]['P75 Recall']:.4f}")
-
 
 if __name__ == "__main__":
     main()
